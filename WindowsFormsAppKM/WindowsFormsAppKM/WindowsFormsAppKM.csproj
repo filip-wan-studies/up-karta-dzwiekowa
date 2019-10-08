@@ -58,10 +58,11 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlaySoundPlayer.cs" />
+    <Compile Include="Interfaces\iPlayer.cs" />
+    <Compile Include="Players\PlaySoundPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DirectXPlayer.cs" />
+    <Compile Include="Players\DirectXPlayer.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
