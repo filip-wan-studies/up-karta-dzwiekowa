@@ -4,11 +4,21 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFormsAppKM.Interfaces;
 
 namespace WindowsFormsAppKM
 {
-    static class PlaySoundPlayer
+    public class PlaySoundPlayer : iPlayer
     {
+        public PlaySoundPlayer(string fileName)
+        {
+            FileName = fileName;
+        }
+
+        public string FileName { get; }
+
+        public bool IsPausable { get; } = false;
+
         [DllImport("winmm.dll", SetLastError = true)]
         static extern bool PlaySound(string pszSound, UIntPtr hmod, uint fdwSound);
 
@@ -40,8 +50,19 @@ namespace WindowsFormsAppKM
             /// <summary>name is resource name or atom</summary>
             SND_RESOURCE = 0x00040004
         }
-        public static void Play(string filename) {
-            PlaySound(filename, UIntPtr.Zero, (uint)(SoundFlags.SND_FILENAME | SoundFlags.SND_ASYNC | SoundFlags.SND_LOOP));
+
+        public void Play()
+        {
+            PlaySound(FileName, UIntPtr.Zero, (uint)(SoundFlags.SND_FILENAME | SoundFlags.SND_ASYNC | SoundFlags.SND_LOOP));
+        }
+
+        public void Pause()
+        {
+        }
+
+        public void Stop()
+        {
+            PlaySound(null, UIntPtr.Zero, 0);
         }
     }
 }
