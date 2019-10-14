@@ -59,6 +59,7 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\iPlayer.cs" />
+    <Compile Include="Players\WaveOutWrite.cs" />
     <Compile Include="Players\MCIPlayer.cs" />
     <Compile Include="Players\PlaySoundPlayer.cs" />
     <Compile Include="Players\WindowsMediaPlayer.cs" />

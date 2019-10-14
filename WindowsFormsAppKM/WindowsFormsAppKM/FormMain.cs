@@ -37,7 +37,7 @@ namespace WindowsFormsAppKM
                 case "Windows Media Player (WMP)":
                     return new WindowsMediaPlayer(fileName);
                 case "WaveOutWrite":
-                    return null;
+                    return new WaveOutWrite(fileName);
                 case "MCI":
                     return new MCIPlayer(fileName);
                 case "Direct Sound":
