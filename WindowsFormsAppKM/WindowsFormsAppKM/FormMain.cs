@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsAppKM.Interfaces;
+using WindowsFormsAppKM.Players;
 
 namespace WindowsFormsAppKM
 {
@@ -43,6 +44,14 @@ namespace WindowsFormsAppKM
             {
                 case "Play Sound":
                     return new PlaySoundPlayer(fileName);
+                case "Windows Media Player (WMP)":
+                    return new WindowsMediaPlayer(fileName);
+                case "WaveOutWrite":
+                    return null;
+                case "MCI":
+                    return new MCIPlayer(fileName);
+                case "Direct Sound":
+                    return new DirectXPlayer(fileName);
                 default:
                     return null;
             }

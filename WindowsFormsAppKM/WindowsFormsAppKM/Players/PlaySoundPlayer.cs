@@ -13,6 +13,7 @@ namespace WindowsFormsAppKM
         public PlaySoundPlayer(string fileName)
         {
             FileName = fileName;
+
         }
 
         public string FileName { get; }

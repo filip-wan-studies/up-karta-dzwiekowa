@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFormsAppKM.Interfaces;
 using SharpDX;
 using SharpDX.DirectSound;
 using SharpDX.IO;
@@ -11,9 +12,18 @@ using SharpDX.Multimedia;
 
 namespace WindowsFormsAppKM
 {
-    class DirectXPlayer
+    class DirectXPlayer : iPlayer
     {
-        public void Play(string fileName)
+        public DirectXPlayer(string fileName)
+        {
+            FileName = fileName;
+        }
+
+        public string FileName { get; }
+
+        public bool IsPausable { get; } = false;
+
+        public void Play()
         {
             DirectSound directSound = new DirectSound();
 
@@ -62,6 +72,16 @@ namespace WindowsFormsAppKM
 
             // Play the song
             secondarySoundBuffer.Play(0, PlayFlags.Looping);
+        }
+
+        public void Pause()
+        {
+
+        }
+
+        public void Stop()
+        {
+
         }
     }
 }
