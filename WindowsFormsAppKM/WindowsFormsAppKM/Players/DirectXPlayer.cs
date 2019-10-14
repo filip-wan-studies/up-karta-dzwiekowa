@@ -14,74 +14,99 @@ namespace WindowsFormsAppKM
 {
     class DirectXPlayer : iPlayer
     {
-        public DirectXPlayer(string fileName)
+        public DirectXPlayer(string fileName, IntPtr handle)
         {
             FileName = fileName;
+            _secondaryBuffer = initializeSecondaryBuffer(fileName, handle);
         }
 
         public string FileName { get; }
 
-        public bool IsPausable { get; } = false;
+        public bool IsPausable { get; } = true;
+
+        private SecondarySoundBuffer _secondaryBuffer;
+
+        private SecondarySoundBuffer initializeSecondaryBuffer(string fileName, IntPtr handle)
+        {
+            var directSound = new DirectSound();
+            directSound.SetCooperativeLevel(handle, CooperativeLevel.Exclusive);
+
+            // Open the wave file in binary.
+            var reader = new BinaryReader(File.OpenRead(FileName));
+
+            // Read in the wave file header.
+            var chunkId = new string(reader.ReadChars(4));
+            var chunkSize = reader.ReadInt32();
+            var format = new string(reader.ReadChars(4));
+            var subChunkId = new string(reader.ReadChars(4));
+            var subChunkSize = reader.ReadInt32();
+            var audioFormat = (WaveFormatEncoding)reader.ReadInt16();
+            var numChannels = reader.ReadInt16();
+            var sampleRate = reader.ReadInt32();
+            var bytesPerSecond = reader.ReadInt32();
+            var blockAlign = reader.ReadInt16();
+            var bitsPerSample = reader.ReadInt16();
+            var dataChunkId = new string(reader.ReadChars(4));
+            var dataSize = reader.ReadInt32();
+
+            // Check that the chunk ID is the RIFF format
+            // and the file format is the WAVE format
+            // and sub chunk ID is the fmt format
+            // and the audio format is PCM
+            // and the wave file was recorded in stereo format
+            // and at a sample rate of 44.1 KHz
+            // and at 16 bit format
+            // and there is the data chunk header.
+            // Otherwise return false.
+            if (chunkId != "RIFF" || format != "WAVE" || subChunkId.Trim() != "fmt" ||
+                audioFormat != WaveFormatEncoding.Pcm || numChannels != 2 || sampleRate != 44100 ||
+                bitsPerSample != 16 || dataChunkId != "data")
+                return null;
+
+            // Set the buffer description of the secondary sound buffer that the wave file will be loaded onto and the wave format.
+            var buffer = new SoundBufferDescription
+            {
+                Flags = BufferFlags.ControlVolume,
+                BufferBytes = dataSize,
+                Format = new WaveFormat(44100, 16, 2),
+                AlgorithmFor3D = Guid.Empty
+            };
+
+            // Create a temporary sound buffer with the specific buffer settings.
+            var secondaryBuffer = new SecondarySoundBuffer(directSound, buffer);
+
+            // Read in the wave file data into the temporary buffer.
+            var waveData = reader.ReadBytes(dataSize);
+
+            // Close the reader
+            reader.Close();
+
+            // Lock the secondary buffer to write wave data into it.
+            var waveBufferData1 = secondaryBuffer.Lock(0, dataSize, LockFlags.None, out var waveBufferData2);
+
+            // Copy the wave data into the buffer.
+            waveBufferData1.Write(waveData, 0, dataSize);
+
+            // Unlock the secondary buffer after the data has been written to it.
+            secondaryBuffer.Unlock(waveBufferData1, waveBufferData2);
+
+            return secondaryBuffer;
+        }
 
         public void Play()
         {
-            DirectSound directSound = new DirectSound();
-
-            var primaryBufferDesc = new SoundBufferDescription();
-            primaryBufferDesc.Flags = BufferFlags.PrimaryBuffer;
-
-            var primarySoundBuffer = new PrimarySoundBuffer(directSound, primaryBufferDesc);
-
-            primarySoundBuffer.Play(0, PlayFlags.Looping);
-            
-            WaveFormat waveFormat = new WaveFormat();
-
-            var secondaryBufferDesc = new SoundBufferDescription();
-            secondaryBufferDesc.BufferBytes = waveFormat.ConvertLatencyToByteSize(60000);
-            secondaryBufferDesc.Format = waveFormat;
-            secondaryBufferDesc.Flags = BufferFlags.GetCurrentPosition2 | BufferFlags.ControlPositionNotify | BufferFlags.GlobalFocus |
-                                        BufferFlags.ControlVolume | BufferFlags.StickyFocus;
-            secondaryBufferDesc.AlgorithmFor3D = Guid.Empty;
-            var secondarySoundBuffer = new SecondarySoundBuffer(directSound, secondaryBufferDesc);
-
-            // Get Capabilties from secondary sound buffer
-            var capabilities = secondarySoundBuffer.Capabilities;
-            // Lock the buffer
-
-            //byte[] bytes1 = new byte[desc2.SizeInBytes / 2];
-            //byte[] bytes2 = new byte[desc2.SizeInBytes];
-
-            //Stream stream = File.Open(audioFile, FileMode.Open);
-
-            DataStream dataPart2;
-            //dataPart2.Write()
-            var dataPart1 = secondarySoundBuffer.Lock(0, capabilities.BufferBytes, LockFlags.EntireBuffer, out dataPart2);
-
-            // Fill the buffer with some sound
-            int numberOfSamples = capabilities.BufferBytes / waveFormat.BlockAlign;
-            for (int i = 0; i < numberOfSamples; i++)
-            {
-                double vibrato = Math.Cos(2 * Math.PI * 10.0 * i / waveFormat.SampleRate);
-                short value = (short)(Math.Cos(2 * Math.PI * (220.0 + 4.0 * vibrato) * i / waveFormat.SampleRate) * 16384); // Not too loud
-                dataPart1.Write(value);
-                dataPart1.Write(value);
-            }
-
-            // Unlock the buffer
-            secondarySoundBuffer.Unlock(dataPart1, dataPart2);
-
-            // Play the song
-            secondarySoundBuffer.Play(0, PlayFlags.Looping);
+            _secondaryBuffer.Play(0, PlayFlags.Looping);
         }
 
         public void Pause()
         {
-
+            _secondaryBuffer.Stop();
         }
 
         public void Stop()
         {
-
+            _secondaryBuffer.Stop();
+            _secondaryBuffer.CurrentPosition = 0;
         }
     }
 }

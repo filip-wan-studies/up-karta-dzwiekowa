@@ -1,14 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsAppKM.Interfaces;
 using WindowsFormsAppKM.Players;
@@ -51,7 +41,7 @@ namespace WindowsFormsAppKM
                 case "MCI":
                     return new MCIPlayer(fileName);
                 case "Direct Sound":
-                    return new DirectXPlayer(fileName);
+                    return new DirectXPlayer(fileName, this.Handle);
                 default:
                     return null;
             }
@@ -85,6 +75,7 @@ namespace WindowsFormsAppKM
             Player?.Stop();
             if (openFileDialog.FileName == "" || !openFileDialog.CheckFileExists) return;
             Player = CreatePlayer(openFileDialog.FileName);
+            buttonPause.Enabled = Player?.IsPausable ?? false;
         }
     }
 }
