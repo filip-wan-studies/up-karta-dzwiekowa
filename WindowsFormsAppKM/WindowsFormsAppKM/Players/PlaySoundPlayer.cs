@@ -6,19 +6,39 @@ namespace WindowsFormsAppKM
 {
     public class PlaySoundPlayer : iPlayer
     {
+        /// <summary>
+        /// Nazwa wybranego pliku
+        /// </summary>
+        public string FileName { get; }
+
+        /// <summary>
+        /// Wybrana metoda nie obsługuje pauzowania odtwarzania
+        /// </summary>
+        public bool IsPausable { get; } = false;
+
+        /// <summary>
+        /// Konstruktor - przypisanie nazwy pliku
+        /// </summary>
+        /// <param name="fileName"></param>
         public PlaySoundPlayer(string fileName)
         {
             FileName = fileName;
 
         }
 
-        public string FileName { get; }
-
-        public bool IsPausable { get; } = false;
-
+        /// <summary>
+        /// Import metody PlaySound
+        /// </summary>
+        /// <param name="pszSound"></param>
+        /// <param name="hmod"></param>
+        /// <param name="fdwSound"></param>
+        /// <returns></returns>
         [DllImport("winmm.dll", SetLastError = true)]
         private static extern bool PlaySound(string pszSound, UIntPtr hmod, uint fdwSound);
 
+        /// <summary>
+        /// Używane flagi
+        /// </summary>
         [System.Flags]
         private enum SoundFlags : int
         {
@@ -30,6 +50,9 @@ namespace WindowsFormsAppKM
             SND_FILENAME = 0x00020000
         }
 
+        /// <summary>
+        /// Odtwarzanie wybranego pliku
+        /// </summary>
         public void Play()
         {
             PlaySound(FileName, UIntPtr.Zero, (uint)(SoundFlags.SND_FILENAME | SoundFlags.SND_ASYNC | SoundFlags.SND_LOOP));
@@ -39,6 +62,9 @@ namespace WindowsFormsAppKM
         {
         }
 
+        /// <summary>
+        /// Zatrzymanie wybranego pliku
+        /// </summary>
         public void Stop()
         {
             PlaySound(null, UIntPtr.Zero, 0);

@@ -43,10 +43,10 @@
             // 
             // buttonStart
             // 
-            this.buttonStart.Location = new System.Drawing.Point(24, 219);
-            this.buttonStart.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonStart.Location = new System.Drawing.Point(16, 146);
+            this.buttonStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(386, 120);
+            this.buttonStart.Size = new System.Drawing.Size(257, 80);
             this.buttonStart.TabIndex = 0;
             this.buttonStart.Text = "START";
             this.buttonStart.UseVisualStyleBackColor = true;
@@ -59,22 +59,21 @@
             this.comboBoxPlayMethod.Items.AddRange(new object[] {
             "Play Sound",
             "Windows Media Player (WMP)",
-            "WaveOutWrite",
             "MCI",
             "Direct Sound"});
-            this.comboBoxPlayMethod.Location = new System.Drawing.Point(24, 158);
-            this.comboBoxPlayMethod.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBoxPlayMethod.Location = new System.Drawing.Point(16, 105);
+            this.comboBoxPlayMethod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxPlayMethod.Name = "comboBoxPlayMethod";
-            this.comboBoxPlayMethod.Size = new System.Drawing.Size(1178, 45);
+            this.comboBoxPlayMethod.Size = new System.Drawing.Size(787, 33);
             this.comboBoxPlayMethod.TabIndex = 1;
             this.comboBoxPlayMethod.SelectedIndexChanged += new System.EventHandler(this.ComboBoxPlayMethod_SelectedIndexChanged);
             // 
             // buttonPause
             // 
-            this.buttonPause.Location = new System.Drawing.Point(422, 219);
-            this.buttonPause.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonPause.Location = new System.Drawing.Point(281, 146);
+            this.buttonPause.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonPause.Name = "buttonPause";
-            this.buttonPause.Size = new System.Drawing.Size(386, 120);
+            this.buttonPause.Size = new System.Drawing.Size(257, 80);
             this.buttonPause.TabIndex = 2;
             this.buttonPause.Text = "PAUSE";
             this.buttonPause.UseVisualStyleBackColor = true;
@@ -82,10 +81,10 @@
             // 
             // buttonStop
             // 
-            this.buttonStop.Location = new System.Drawing.Point(819, 219);
-            this.buttonStop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonStop.Location = new System.Drawing.Point(546, 146);
+            this.buttonStop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(386, 120);
+            this.buttonStop.Size = new System.Drawing.Size(257, 80);
             this.buttonStop.TabIndex = 3;
             this.buttonStop.Text = "STOP";
             this.buttonStop.UseVisualStyleBackColor = true;
@@ -93,10 +92,10 @@
             // 
             // buttonFile
             // 
-            this.buttonFile.Location = new System.Drawing.Point(20, 20);
-            this.buttonFile.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonFile.Location = new System.Drawing.Point(13, 13);
+            this.buttonFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonFile.Name = "buttonFile";
-            this.buttonFile.Size = new System.Drawing.Size(1182, 60);
+            this.buttonFile.Size = new System.Drawing.Size(788, 40);
             this.buttonFile.TabIndex = 4;
             this.buttonFile.Text = "Select File";
             this.buttonFile.UseVisualStyleBackColor = true;
@@ -105,9 +104,10 @@
             // labelSelectedFile
             // 
             this.labelSelectedFile.AutoSize = true;
-            this.labelSelectedFile.Location = new System.Drawing.Point(16, 102);
+            this.labelSelectedFile.Location = new System.Drawing.Point(11, 68);
+            this.labelSelectedFile.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelSelectedFile.Name = "labelSelectedFile";
-            this.labelSelectedFile.Size = new System.Drawing.Size(208, 37);
+            this.labelSelectedFile.Size = new System.Drawing.Size(144, 26);
             this.labelSelectedFile.TabIndex = 5;
             this.labelSelectedFile.Text = "Selected File:";
             // 
@@ -119,15 +119,17 @@
             // textBoxSelectedFile
             // 
             this.textBoxSelectedFile.Enabled = false;
-            this.textBoxSelectedFile.Location = new System.Drawing.Point(230, 98);
+            this.textBoxSelectedFile.Location = new System.Drawing.Point(153, 65);
+            this.textBoxSelectedFile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxSelectedFile.Name = "textBoxSelectedFile";
-            this.textBoxSelectedFile.Size = new System.Drawing.Size(972, 44);
+            this.textBoxSelectedFile.Size = new System.Drawing.Size(649, 32);
             this.textBoxSelectedFile.TabIndex = 6;
             // 
             // axWindowsMediaPlayer1
             // 
             this.axWindowsMediaPlayer1.Enabled = true;
             this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(531, 348);
+            this.axWindowsMediaPlayer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
             this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
             this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(143, 35);
@@ -136,9 +138,9 @@
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1221, 387);
+            this.ClientSize = new System.Drawing.Size(814, 258);
             this.Controls.Add(this.axWindowsMediaPlayer1);
             this.Controls.Add(this.textBoxSelectedFile);
             this.Controls.Add(this.labelSelectedFile);
@@ -149,7 +151,7 @@
             this.Controls.Add(this.buttonStart);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormMain";
             this.Text = "Karta Muzyczna";
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();

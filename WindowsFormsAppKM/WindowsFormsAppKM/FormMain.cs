@@ -7,19 +7,34 @@ namespace WindowsFormsAppKM
 {
     public partial class FormMain : Form
     {
+        /// <summary>
+        /// Pole z klasą odtwarzającą podany plik
+        /// </summary>
         private iPlayer Player { get; set; }
 
+        /// <summary>
+        /// Inicjalizacja okna
+        /// </summary>
         public FormMain()
         {
             InitializeComponent();
             comboBoxPlayMethod.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Ustawienie pola tekstowego FileName
+        /// na nazwę wybranego pliku
+        /// </summary>
+        /// <param name="text"></param>
         private void SetText(string text)
         {
             textBoxSelectedFile.Text = text;
         }
 
+        /// <summary>
+        /// Stworzenie nowego obiektu Player o podanej nazwie
+        /// </summary>
+        /// <param name="fileName"></param>
         private void ChangeFileName(string fileName)
         {
             Player = CreatePlayer(fileName);
@@ -28,6 +43,12 @@ namespace WindowsFormsAppKM
             buttonPause.Enabled = Player.IsPausable;
         }
 
+        /// <summary>
+        /// Stworzenie nowego odtwarzacza w zależności
+        /// od wybranego sposobu odtwarzania
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         private iPlayer CreatePlayer(string fileName)
         {
             switch (comboBoxPlayMethod.Text)
@@ -36,8 +57,6 @@ namespace WindowsFormsAppKM
                     return new PlaySoundPlayer(fileName);
                 case "Windows Media Player (WMP)":
                     return new WindowsMediaPlayer(fileName);
-                case "WaveOutWrite":
-                    return new WaveOutWrite(fileName);
                 case "MCI":
                     return new MCIPlayer(fileName);
                 case "Direct Sound":
@@ -46,6 +65,8 @@ namespace WindowsFormsAppKM
                     return null;
             }
         }
+
+        // Event handlery
 
         private void buttonFile_Click(object sender, EventArgs e)
         {

@@ -9,34 +9,55 @@ namespace WindowsFormsAppKM.Players
 {
     class WindowsMediaPlayer : iPlayer
     {
-
-        public WindowsMediaPlayer(string fileName)
-        {
-            wmPlayer = new WMPLib.WindowsMediaPlayer();
-            FileName = fileName;
-            wmPlayer.settings.autoStart = false;
-            wmPlayer.URL = FileName;
-        }
-
-        public WMPLib.WindowsMediaPlayer wmPlayer;
-
+        /// <summary>
+        /// Nazwa wybranego pliku
+        /// </summary>
         public string FileName { get; }
 
+        /// <summary>
+        /// Wybrana metoda nie obsługuje pauzowania odtwarzania
+        /// </summary>
         public bool IsPausable { get; } = true;
 
+        /// <summary>
+        /// Odtwarzacz windows media player
+        /// </summary>
+        private readonly WMPLib.WindowsMediaPlayer _wmPlayer;
+
+        /// <summary>
+        /// Kontruktor i inicjalizacja windows media playera
+        /// </summary>
+        /// <param name="fileName"></param>
+        public WindowsMediaPlayer(string fileName)
+        {
+            FileName = fileName;
+            _wmPlayer = new WMPLib.WindowsMediaPlayer();
+            _wmPlayer.settings.autoStart = false;
+            _wmPlayer.URL = FileName;
+        }
+
+        /// <summary>
+        /// Odtwarzanie wybranego pliku
+        /// </summary>
         public void Play()
         {
-            wmPlayer.controls.play();
+            _wmPlayer.controls.play();
         }
 
+        /// <summary>
+        /// Pauzowanie odtwarzania wybranego pliku
+        /// </summary>
         public void Pause()
         {
-            wmPlayer.controls.pause();
+            _wmPlayer.controls.pause();
         }
 
+        /// <summary>
+        /// Zatrzymanie odtwarzania wybranego pliku
+        /// </summary>
         public void Stop()
         {
-            wmPlayer.controls.stop();
+            _wmPlayer.controls.stop();
         }
     }
 }
